@@ -1,22 +1,9 @@
-build/
-*.o
-*.exe
-*.out
-*.app
-.vscode/
-*.code-workspace
-CMakeCache.txt
-CMakeFiles/
-cmake_install.cmake
-Makefile
-*.swp
-*.swo
-*~
-.DS_Store
-Thumbs.db
-*.tmp
-*.temp
-/lvgl/
-build_all.sh
-main.c
-lv_conf.h
+# 忽略根目录的所有文件和目录
+/*
+
+# 但保留 smart_home 目录和 .gitignore 本身
+!.gitignore
+!smart_home/
+
+# 忽略 smart_home 里的临时文件
+smart_home/.vscode/
