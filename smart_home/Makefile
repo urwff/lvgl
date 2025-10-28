@@ -3,6 +3,7 @@ CC = arm-buildroot-linux-gnueabihf-gcc
 # 编译选项
 CFLAGS = -O2 -Wall -Wextra
 CFLAGS += -I./src
+CFLAGS += -I./libs         # 指向 libs 目录
 CFLAGS += -I./libs/lvgl
 CFLAGS += -I./libs/lv_drivers
 CFLAGS += -DLV_CONF_INCLUDE_SIMPLE
