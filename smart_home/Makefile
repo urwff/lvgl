@@ -30,7 +30,7 @@ SRCS = $(APP_SRC) $(LVGL_SRC) $(LVGL_DRV_SRC)
 OBJS = $(SRCS:.c=.o)
 
 # 可执行文件
-TARGET = smart_home_ui
+TARGET = smart_home
 
 # 默认目标
 all: $(TARGET)
