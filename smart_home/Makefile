@@ -34,34 +34,34 @@ TARGET = smart_home_ui
 
 # 默认目标
 all: $(TARGET)
-@echo "\n✅ 编译完成！"
-@echo "📦 可执行文件: $(TARGET)"
-@echo "\n🚀 部署到开发板:"
-@echo "   scp $(TARGET) root@192.168.x.x:/root/"
-@echo "\n▶️  运行:"
-@echo "   ./$(TARGET)"
+	@echo "\n✅ 编译完成！"
+	@echo "📦 可执行文件: $(TARGET)"
+	@echo "\n🚀 部署到开发板:"
+	@echo "   scp $(TARGET) root@192.168.x.x:/root/"
+	@echo "\n▶️  运行:"
+	@echo "   ./$(TARGET)"
 
 # 编译目标
 $(TARGET): $(OBJS)
-@echo "🔗 链接中..."
-$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+	@echo "🔗 链接中..."
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 # 编译 C 文件
 %.o: %.c
-@echo "📝 编译: $<"
-@$(CC) $(CFLAGS) -c $< -o $@
+	@echo "📝 编译: $<"
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 # 清理
 clean:
-@echo "🧹 清理编译产物..."
-@rm -f $(OBJS) $(TARGET)
-@echo "✓ 清理完成"
+	@echo "🧹 清理编译产物..."
+	@rm -f $(OBJS) $(TARGET)
+	@echo "✓ 清理完成"
 
 # 帮助信息
 help:
-@echo "可用命令:"
-@echo "  make          - 编译项目"
-@echo "  make clean    - 清理编译产物"
-@echo "  make help     - 显示帮助信息"
+	@echo "可用命令:"
+	@echo "  make          - 编译项目"
+	@echo "  make clean    - 清理编译产物"
+	@echo "  make help     - 显示帮助信息"
 
 .PHONY: all clean help
