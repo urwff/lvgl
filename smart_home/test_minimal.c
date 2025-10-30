@@ -1,4 +1,4 @@
-#include "lvgl/lvgl.h"
+#include "libs/lvgl/lvgl.h"
 #include <unistd.h>
 
 int main(void) {
