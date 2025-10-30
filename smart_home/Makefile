@@ -1,5 +1,5 @@
 CC = arm-buildroot-linux-gnueabihf-gcc
-CFLAGS = -O2 -Wall -I./src -I./libs -DLV_CONF_INCLUDE_SIMPLE
+CFLAGS = -O2 -Wall -I./src -I./libs -I. -DLV_CONF_INCLUDE_SIMPLE
 LDFLAGS = -lm -lpthread
 
 # LVGL 9.4源文件（内置驱动）
