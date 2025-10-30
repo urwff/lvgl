@@ -9,7 +9,7 @@ LVGL_SRC = $(shell find libs/lvgl/src -name "*.c")
 APP_SRC = src/main.c src/app_init.c $(wildcard src/core/*.c) $(wildcard src/ui/**/*.c)
 
 SRCS = $(APP_SRC) $(LVGL_SRC)
-TARGET = smart_home_ui
+TARGET = smart_home
 
 all: $(TARGET)
 
