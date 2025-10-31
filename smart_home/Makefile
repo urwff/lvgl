@@ -38,7 +38,7 @@ LDFLAGS = -lm -lpthread
 # LVGL 9.4 源文件：递归查找 libs/lvgl/src 下的所有 .c 文件
 # LVGL 9.4 已内置 framebuffer 和 evdev 驱动，无需外部 lv_drivers
 LVGL_SRC = $(shell find ./libs/lvgl/src -name "*.c")
-
+LVGL_SRC += $(shell find ./libs/lvgl/demos -name "*.c")
 # 应用源文件：
 # - src/main.c: 主程序入口
 # - src/app_init.c: 应用初始化
