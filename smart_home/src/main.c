@@ -1,47 +1,70 @@
-#include "app_init.h"
-#include "lvgl/lvgl.h"
-#include "lvgl/demos/lv_demos.h"
-#include <stdio.h>
-
-static void event_cb(lv_event_t * e)
-{
-    LV_LOG_USER("Clicked");
-
-    static uint32_t cnt = 1;
-    lv_obj_t * btn = lv_event_get_target_obj(e);
-    lv_obj_t * label = lv_obj_get_child(btn, 0);
-    lv_label_set_text_fmt(label, "%" LV_PRIu32, cnt);
-    cnt++;
-}
-
 /**
- * Add click event to a button
+ * @file main.c
+ * LVGL 9.4 智能家居主程序
+ * 分辨率：1024×600
  */
-void lv_example_event_click(void)
-{
-    lv_obj_t * btn = lv_button_create(lv_screen_active());
-    lv_obj_set_size(btn, 100, 50);
-    lv_obj_center(btn);
-    lv_obj_add_event_cb(btn, event_cb, LV_EVENT_CLICKED, NULL);
 
-    lv_obj_t * label = lv_label_create(btn);
-    lv_label_set_text(label, "Click me!");
-    lv_obj_center(label);
+#include "lvgl/lvgl.h"
+#include "ui/ui_home.h"
+#include <unistd.h>
+#include <stdio.h>
+#include <signal.h>
+
+static volatile bool running = true;
+
+static void signal_handler(int signum)
+{
+    printf("\n收到信号 %d，退出程序...\n", signum);
+    running = false;
 }
 
-int main(void) {
-    // 初始化
-    if (app_init_all() != 0) {
-        printf("初始化失败\n");
+int main(void)
+{
+    printf("========================================\n");
+    printf("   智能家居控制系统 v1.0 (LVGL 9.4)   \n");
+    printf("========================================\n\n");
+
+    /* 注册信号处理 */
+    signal(SIGINT, signal_handler);
+    signal(SIGTERM, signal_handler);
+
+    /* ===== 1. 初始化 LVGL ===== */
+    printf("[1/4] 初始化 LVGL...\n");
+    lv_init();
+
+    /* ===== 2. 创建显示驱动（LVGL 9.4 简化 API）===== */
+    printf("[2/4] 初始化显示驱动...\n");
+    lv_display_t *display = lv_linux_fbdev_create();
+    if (!display) {
+        fprintf(stderr, "❌ 错误：无法创建 fbdev 显示设备\n");
         return -1;
     }
-    
-    // 创建测试界面
-    lv_obj_t *label = lv_label_create(lv_screen_active());
-    lv_label_set_text(label, "Smart Home Test");
-    lv_obj_center(label);
-    
-    // 运行
-    app_run_loop();
+    lv_linux_fbdev_set_file(display, "/dev/fb0");
+    printf("  ✓ Framebuffer: /dev/fb0\n");
+
+    /* ===== 3. 创建输入驱动（LVGL 9.4 简化 API）===== */
+    printf("[3/4] 初始化输入设备...\n");
+    lv_indev_t *indev = lv_evdev_create(LV_INDEV_TYPE_POINTER, "/dev/input/event1");
+    if (!indev) {
+        fprintf(stderr, "❌ 警告：无法创建输入设备，触摸功能不可用\n");
+    } else {
+        printf("  ✓ 输入设备: /dev/input/event1\n");
+    }
+
+    /* ===== 4. 创建 UI ===== */
+    printf("[4/4] 创建用户界面...\n\n");
+    ui_home_create();
+
+    printf("========================================\n");
+    printf("   系统启动成功！按 Ctrl+C 退出      \n");
+    printf("========================================\n\n");
+
+    /* ===== 主事件循环 ===== */
+    while (running) {
+        uint32_t delay = lv_timer_handler();
+        usleep(delay * 1000);
+    }
+
+    printf("\n程序正常退出\n");
     return 0;
 }

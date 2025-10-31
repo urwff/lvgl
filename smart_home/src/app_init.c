@@ -3,6 +3,8 @@
 
 #include <time.h>
 
+#define DISPLAY_DEVICE "/dev/fb0"
+
 static lv_display_t *g_display = NULL;
 static lv_indev_t *g_indev = NULL;
 
