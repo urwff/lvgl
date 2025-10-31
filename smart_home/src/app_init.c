@@ -1,6 +1,8 @@
 #include "app_init.h"
 #include "lvgl/lvgl.h"
 
+#include <time.h>
+
 static lv_display_t *g_display = NULL;
 static lv_indev_t *g_indev = NULL;
 
@@ -18,9 +20,13 @@ int app_init_all(void) {
     return 0;
 }
 
+
 void app_run_loop(void) {
     while (1) {
-        uint32_t time_till_next = lv_timer_handler();
-        usleep(time_till_next * 1000);
+        uint32_t ms = lv_timer_handler();
+        struct timespec ts;
+        ts.tv_sec = ms / 1000;
+        ts.tv_nsec = (ms % 1000) * 1000000;
+        nanosleep(&ts, NULL);
     }
 }
