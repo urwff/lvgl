@@ -1,7 +1,7 @@
 # ===== 编译器配置 =====
 CC = arm-buildroot-linux-gnueabihf-gcc
 CFLAGS = -O2 -Wall -Wextra
-CFLAGS += -I./src -I./libs/lvgl
+CFLAGS += -I./src -I./libs/lvgl -I./
 CFLAGS += -DLV_CONF_INCLUDE_SIMPLE
 LDFLAGS = -lm -lpthread
 
