@@ -1,6 +1,6 @@
 /**
  * @file ui_home.h
- * 智能家居主界面
+ * 智能家居仪表盘主界面
  */
 
 #ifndef UI_HOME_H

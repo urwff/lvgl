@@ -1,7 +1,7 @@
 # ===== 编译器配置 =====
 CC = arm-buildroot-linux-gnueabihf-gcc
 CFLAGS = -O2 -Wall -Wextra
-CFLAGS += -I./src -I./libs -I./
+CFLAGS += -I./src -I./libs
 CFLAGS += -DLV_CONF_INCLUDE_SIMPLE
 LDFLAGS = -lm -lpthread
 
@@ -17,14 +17,13 @@ LVGL_SRCS = $(shell find $(LVGL_DIR)/src -name "*.c" \
 # 应用源文件
 APP_SRCS = src/main.c \
            src/ui/ui_styles.c \
-           src/ui/ui_card.c \
            src/ui/ui_home.c
 
 # 所有源文件
 SRCS = $(APP_SRCS) $(LVGL_SRCS)
 OBJS = $(SRCS:.c=.o)
 
-TARGET = smart_home_ui
+TARGET = smart_home_dashboard
 
 # ===== 构建规则 =====
 all: $(TARGET)
